@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="DesktopSave.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DesktopSave"
+    xmlns:models="using:DesktopSave.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="DesktopSave">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop />
+    </Window.SystemBackdrop>
+
+    <Grid Padding="24" RowSpacing="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Spacing="4">
+            <TextBlock Text="Icônes du bureau" Style="{StaticResource TitleTextBlockStyle}" />
+            <TextBlock x:Name="ResolutionText" Style="{StaticResource BodyTextBlockStyle}" Opacity="0.8" />
+            <TextBlock x:Name="SavedInfoText" Style="{StaticResource CaptionTextBlockStyle}" Opacity="0.7" TextWrapping="Wrap" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="12">
+            <Button x:Name="SaveButton" Content="Sauvegarder" Style="{StaticResource AccentButtonStyle}" Click="OnSaveClick" />
+            <Button x:Name="RestoreButton" Content="Restaurer" Click="OnRestoreClick" />
+            <Button x:Name="RefreshButton" Content="Actualiser" Click="OnRefreshClick" />
+            <Button x:Name="OpenFolderButton" Content="Ouvrir le dossier" Click="OnOpenFolderClick" />
+        </StackPanel>
+
+        <ListView Grid.Row="2"
+                  x:Name="IconsListView"
+                  SelectionMode="None"
+                  BorderThickness="1"
+                  BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                  CornerRadius="8">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:DesktopIcon">
+                    <Grid ColumnSpacing="12" Padding="0,6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{x:Bind Name}" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Grid.Column="1" Opacity="0.7">
+                            <Run Text="X=" /><Run Text="{x:Bind X}" />
+                            <Run Text="  Y=" /><Run Text="{x:Bind Y}" />
+                        </TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <InfoBar Grid.Row="3"
+                 x:Name="StatusBar"
+                 IsOpen="False"
+                 IsClosable="True" />
+    </Grid>
+</Window>
